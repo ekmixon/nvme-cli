@@ -46,8 +46,8 @@ class TestNVMeUncor(TestNVMeIO):
         TestNVMeIO.__init__(self)
         self.start_block = 1023
         self.setup_log_dir(self.__class__.__name__)
-        self.write_file = self.test_log_dir + "/" + self.write_file
-        self.read_file = self.test_log_dir + "/" + self.read_file
+        self.write_file = f"{self.test_log_dir}/{self.write_file}"
+        self.read_file = f"{self.test_log_dir}/{self.read_file}"
         self.create_data_file(self.write_file, self.data_size, "15")
         open(self.read_file, 'a').close()
 
@@ -62,9 +62,12 @@ class TestNVMeUncor(TestNVMeIO):
             - Returns:
                 - return code of nvme write uncorrectable command.
         """
-        write_uncor_cmd = "nvme write-uncor " + self.ns1 + \
-                          " --start-block=" + str(self.start_block) + \
-                          " --block-count=" + str(self.block_count)
+        write_uncor_cmd = (
+            (f"nvme write-uncor {self.ns1}" + " --start-block=")
+            + str(self.start_block)
+            + " --block-count="
+        ) + str(self.block_count)
+
         return self.exec_cmd(write_uncor_cmd)
 
     def test_write_uncor(self):

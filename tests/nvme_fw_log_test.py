@@ -56,7 +56,7 @@ class TestNVMeFwLogCmd(TestNVMe):
                 - 0 on success, error code on failure.
         """
         err = 0
-        fw_log_cmd = "nvme fw-log " + self.ctrl
+        fw_log_cmd = f"nvme fw-log {self.ctrl}"
         proc = subprocess.Popen(fw_log_cmd,
                                 shell=True,
                                 stdout=subprocess.PIPE,
